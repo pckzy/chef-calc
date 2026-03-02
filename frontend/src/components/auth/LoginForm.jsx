@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../lib/axios";
-import AuthInputField from "./AuthInputField";
-import AuthButton from "./AuthButton";
+import AuthInputField from "../common/AuthInputField";
+import AuthButton from "../common/AuthButton";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
