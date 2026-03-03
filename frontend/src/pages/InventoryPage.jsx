@@ -7,6 +7,7 @@ import { useState, useEffect, useMemo } from "react";
 import AddIngredientDrawer from "../components/inventory/AddIngredientDrawer";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import api from "../lib/axios";
+import Button from "../components/common/Button";
 
 const InventoryPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -89,13 +90,7 @@ const InventoryPage = () => {
           title="Ingredient Inventory"
           description="Manage stock and update prices."
         >
-          <button
-            onClick={handleAddNewClick}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-sm font-bold"
-          >
-            <span className="material-symbols-outlined text-[20px]">add</span>
-            <span>Add Ingredient</span>
-          </button>
+          <Button label='Add Ingredient' icon='add' onClick={handleAddNewClick} color='bg-primary'/>
         </Header>
         <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-neutral-border dark:border-gray-800 flex flex-col h-full">
           <InventoryFilters
