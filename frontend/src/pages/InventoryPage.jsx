@@ -132,7 +132,7 @@ const InventoryPage = () => {
                   </span>
                 </div>
 
-                <h3 className="text-xl font-black text-neutral-text-main dark:text-white tracking-tight">
+                <h3 className="text-xl font-medium text-neutral-text-main dark:text-white tracking-tight">
                   No ingredients found
                 </h3>
                 {(searchName || selectedCategory) && (
