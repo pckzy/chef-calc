@@ -5,6 +5,7 @@ import path from 'path';
 
 
 import authRoutes from './routes/authRoutes.js';
+import ingredientRoutes from './routes/ingredientRoutes.js';
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use(express.json());
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/ingredients", ingredientRoutes);
 
 
 
