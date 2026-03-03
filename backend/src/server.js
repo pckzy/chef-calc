@@ -1,18 +1,15 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import path from 'path';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import path from "path";
 
-
-import authRoutes from './routes/authRoutes.js';
-import ingredientRoutes from './routes/ingredientRoutes.js';
-
+import authRoutes from "./routes/authRoutes.js";
+import ingredientRoutes from "./routes/ingredientRoutes.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
 
 dotenv.config();
 
-
 const __dirname = path.resolve();
-
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,17 +21,15 @@ if (process.env.NODE_ENV !== "production") {
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
-    })
+    }),
   );
 }
 
 app.use(express.json());
 
-
 app.use("/api/auth", authRoutes);
 app.use("/api/ingredients", ingredientRoutes);
-
-
+app.use("/api/recipes", recipeRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));

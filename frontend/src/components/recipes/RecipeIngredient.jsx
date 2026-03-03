@@ -1,8 +1,116 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../../lib/axios";
 import IngredientItem from "./IngredientItem";
 
-const RecipeIngredient = () => {
+const UNIT_MULTIPLIERS = {
+  kg: { kg: 1, g: 0.001 },
+  g: { g: 1, kg: 1000 },
+  l: { l: 1, ml: 0.001 },
+  ml: { ml: 1, l: 1000 },
+  unit: { unit: 1 },
+  pack: { pack: 1 },
+  can: { can: 1 },
+  box: { box: 1 },
+};
+
+const calculateCost = (qty, selectedUnit, baseUnit, basePrice) => {
+  const lowerBase = String(baseUnit || selectedUnit).toLowerCase();
+  const lowerSelected = String(selectedUnit).toLowerCase();
+
+  const multipliers = UNIT_MULTIPLIERS[lowerBase] || { [lowerSelected]: 1 };
+
+  const rateToBase = multipliers[lowerSelected] || 1;
+  return (Number(qty || 0) * rateToBase * Number(basePrice)).toFixed(2);
+};
+
+const RecipeIngredient = ({ ingredients, setIngredients }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [inventory, setInventory] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const formatNumber = (num) => {
+    if (!num) return "0.00";
+    return Number(num).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
+  useEffect(() => {
+    const fetchInventory = async () => {
+      try {
+        const response = await api.get("/ingredients");
+        setInventory(response.data);
+      } catch (error) {
+        console.error("Error fetching inventory:", error);
+      }
+    };
+    fetchInventory();
+  }, []);
+
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setSearchResults([]);
+      return;
+    }
+
+    const filtered = inventory.filter((item) => {
+      const matchesSearch = item.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const notAddedYet = !ingredients.some(
+        (selected) => selected.id === item.id,
+      );
+      return matchesSearch && notAddedYet;
+    });
+
+    setSearchResults(filtered);
+  }, [searchTerm, inventory, ingredients]);
+
+  const handleSelectIngredient = (item) => {
+    const baseU = item.unit || "unit";
+
+    const newItem = {
+      id: item.id,
+      name: item.name,
+      category: item.ingredient_categories?.name,
+      priceInfo: `฿${formatNumber(item.purchase_price)}/${baseU}`,
+      imgUrl:
+        item.image_url ||
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBPQspWHU_ME5D1MzmL8uRL9n4W_ft7ctlEN2tIe2irbHXwVzFTlGcXGq_iDmuHtbolZj_oeJ0JGp9Yzy499AcJYcJZmzbijT93inPkUEf6zSxjA9vtjok74ozhIJZOTKEvtk9iCvXANyGysbnWCMx9BFEUvsBwWgezw0QlJXwpmvdXc_rDmp7Wmfgug8Gk1gYffyhG4BNag2GkZpLznL0m7ANg_LHas1Z6Z0NwYUsDPCLwtR1sW3crPxKepIvLD4hS493n5fhe-g9M",
+      qty: 1,
+      unit: baseU,
+      baseUnit: baseU,
+      calculatedCost: Number(item.purchase_price).toFixed(2),
+      basePrice: Number(item.purchase_price),
+    };
+
+    setIngredients([...ingredients, newItem]);
+    setSearchTerm("");
+  };
+
+  const handleUpdateIngredient = (id, field, value) => {
+    setIngredients(
+      ingredients.map((ing) => {
+        if (ing.id !== id) return ing;
+
+        let updatedIng = { ...ing, [field]: value };
+
+        updatedIng.calculatedCost = calculateCost(
+          updatedIng.qty,
+          updatedIng.unit,
+          updatedIng.baseUnit,
+          updatedIng.basePrice,
+        );
+
+        return updatedIng;
+      }),
+    );
+  };
+
+  const handleDeleteIngredient = (id) => {
+    setIngredients(ingredients.filter((ing) => ing.id !== id));
+  };
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-neutral-border dark:border-gray-800 flex-1 flex flex-col ring-4 ring-primary/10 transition-all min-h-0">
@@ -14,10 +122,6 @@ const RecipeIngredient = () => {
           </span>
           Ingredients
         </h3>
-        <button className="text-sm text-primary font-bold hover:underline flex items-center gap-1">
-          <span className="material-symbols-outlined text-[18px]">add</span>
-          Add Ingredient
-        </button>
       </div>
 
       {/* Scrollable List Area (Fix: Uses flex-1 and overflow-y-auto instead of max-h) */}
@@ -30,33 +134,20 @@ const RecipeIngredient = () => {
           <div className="col-span-1"></div>
         </div>
 
-        <IngredientItem
-          name="Arborio Rice"
-          category="Pantry"
-          priceInfo="$2.50/kg"
-          qty="200"
-          unit="g"
-          cost="$0.50"
-          imgUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuAGVD07WB_T5nXNm-SaqaRRz4itCcQeiWqC4NTrabOQStNPj7BXYBaYxwSmgIuXhMg1xItZULtEP1J2iSjznBImZnpTRZYaCRisckZwHRC0FStWHtaKHnejtHL3Uxf0s5FytXuB_Mj6o6rY3oGjxfJgKxUAI6IlKPWfq1xfptCAOd_xwk72QUUqNzCzS1bRxWXOcrpt5a54aoAmZ6PQ2kyQWZrh4BKwrTVwqiCt6-cK8bVcuvo92o8pOLAb3TIwdu7qyaN_doyZEtep"
-        />
-        <IngredientItem
-          name="Wild Mushrooms"
-          category="Fresh"
-          priceInfo="$12.00/kg"
-          qty="150"
-          unit="g"
-          cost="$1.80"
-          imgUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuApJXlP10MNQDLTLvRiInTQxLvNe3Nso2I90OtZ-3JdecJ6dmmVHg9nQT36Cy5xQSu54jmPJ2HBUQ-ivzha3DXvEfIk50sRx7Fyavl_SKdxiRvtf-PPupPagoujPgPSX9p5piCKBthYbtZwrlbjDPZ3zVcqhR7XHrAa3zGndigj-xUFQ1lMhhyVSo-N4E8KZACvCLe9KgUMzZTwhzbP_DIT0W4qtpECBSBdz1mXj5pONOohfLMy7Zxl1E__QaAknhNiF9EWOBucEEOc"
-        />
-        <IngredientItem
-          name="White Truffle Oil"
-          category="Oils"
-          priceInfo="$45.00/L"
-          qty="15"
-          unit="ml"
-          cost="$0.68"
-          imgUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuCF_26W3U_qu46rvCuIwtO_WCTOvgQ0tC_tTFBmbh9emxGdP6g-HOFpHEFXkYs5Qp7HkU2l1bd-tT6BIV9OfddkixB_CGreSgxMJuFLplRonRoKgLlfwtAJDm07mnt6nClNZzXcTxlAYQcUtOghbm2vWt7ckyuRE0-vkaJNs_XcuxB_dDb9Rjp4_CJu5rwy2tBAd6H2yPGfbIsof56lyYRuNNcRJyoJOV4WkBVOVHhri8cWKf3VdvIV-0vBT1XlGuerc_dsGtXKRXuo"
-        />
+        {ingredients.length === 0 ? (
+          <div className="text-center py-10 text-neutral-text-secondary text-sm italic">
+            Search below to add ingredients to your recipe.
+          </div>
+        ) : (
+          ingredients.map((ing) => (
+            <IngredientItem
+              key={ing.id}
+              item={ing}
+              onUpdate={handleUpdateIngredient}
+              onDelete={handleDeleteIngredient}
+            />
+          ))
+        )}
       </div>
 
       {/* Search Area */}
@@ -85,70 +176,47 @@ const RecipeIngredient = () => {
         </div>
 
         {/* Dropdown - Fix: Only shows when there is a search term */}
-        {searchTerm.trim() !== "" && (
+        {searchResults.length > 0 && (
           <div className="absolute bottom-full left-0 right-0 mb-2 mx-4 bg-white dark:bg-gray-900 rounded-lg shadow-2xl border border-neutral-border dark:border-gray-700 overflow-hidden max-h-72 overflow-y-auto z-50 animate-in slide-in-from-bottom-2 fade-in duration-200">
             <div className="px-3 py-2 text-xs font-bold text-neutral-text-secondary uppercase tracking-wider bg-neutral-surface/50 dark:bg-gray-800/50 border-b border-neutral-border dark:border-gray-700 sticky top-0">
               Inventory Matches
             </div>
 
-            {/* Match Items */}
-            <div className="flex items-center justify-between p-3 cursor-pointer bg-primary/10 dark:bg-primary/20 border-l-4 border-primary">
-              <div className="flex items-center gap-3">
-                <div
-                  className="size-10 rounded-md bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-gray-600"
-                  style={{
-                    backgroundImage:
-                      'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCazeJJJRwysdHhZXYumAH9HtmcCkkOA4dSvdA_AQhKKb5yft1fvt0OCNO-ddUKKO6yZAv62iOpLRmyEkR-93rd_lMRlJ8yu0nIuXgk4FNNnhabxU6Yy8SjeaP633RzuWSgE9Q6QOQ0Vcm4QFRlsXWsR29MniZu5Z1IhrmwO_jAlNwfRDA3Ot6lL9XkkmIK_9R3xQ5j0IuGKTVrYGrcMvpIMehSzW8xEZvzjddrXf7ifGhP1cC0j7HX2jaMNc6gEIjPqDdnkr0SHmMG")',
-                  }}
-                ></div>
-                <div>
-                  <p className="font-bold text-sm text-neutral-text-main dark:text-white">
-                    Atlantic Salmon Fillet
+            {searchResults.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => handleSelectIngredient(item)}
+                className="flex items-center justify-between p-3 cursor-pointer hover:bg-neutral-surface dark:hover:bg-gray-800 hover:border-l-4 hover:border-primary group"
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className="size-10 rounded-md bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-gray-600"
+                    style={{
+                      backgroundImage: `url("${item.image_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuBPQspWHU_ME5D1MzmL8uRL9n4W_ft7ctlEN2tIe2irbHXwVzFTlGcXGq_iDmuHtbolZj_oeJ0JGp9Yzy499AcJYcJZmzbijT93inPkUEf6zSxjA9vtjok74ozhIJZOTKEvtk9iCvXANyGysbnWCMx9BFEUvsBwWgezw0QlJXwpmvdXc_rDmp7Wmfgug8Gk1gYffyhG4BNag2GkZpLznL0m7ANg_LHas1Z6Z0NwYUsDPCLwtR1sW3crPxKepIvLD4hS493n5fhe-g9M"}")`,
+                    }}
+                  ></div>
+                  <div>
+                    <p className="font-bold text-sm text-neutral-text-main dark:text-white">
+                      {item.name}
+                    </p>
+                    <p className="text-xs text-neutral-text-secondary font-medium">
+                      {item.ingredient_categories?.name} • {item.unit}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-neutral-text-main dark:text-white">
+                    ฿{formatNumber(item.purchase_price)}
+                    <span className="text-xs font-normal text-gray-500">
+                      /{item.unit}
+                    </span>
                   </p>
-                  <p className="text-xs text-neutral-text-secondary font-medium">
-                    Seafood • In Stock
-                  </p>
+                  <span className="text-xs text-neutral-text-secondary hidden group-hover:inline-block">
+                    Click to add
+                  </span>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-neutral-text-main dark:text-white">
-                  $25.00
-                  <span className="text-xs font-normal text-gray-500">/kg</span>
-                </p>
-                <button className="mt-1 text-xs bg-primary text-neutral-text-main px-2 py-0.5 rounded font-bold shadow-sm hover:brightness-110 transition-all">
-                  Select
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between p-3 cursor-pointer hover:bg-neutral-surface dark:hover:bg-gray-800 border-l-4 border-transparent group">
-              <div className="flex items-center gap-3">
-                <div
-                  className="size-10 rounded-md bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-gray-600"
-                  style={{
-                    backgroundImage:
-                      'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDlhQbBHIfXTMvyTb6ervF4V7MZAN4Vel3j8oAgFA-OkZzRGGQcEPR4SrTYIyJAsyxn9kzrLsHulsNNj6DBWs4DoD7-jM6Zbki4ez_eMNs_TOXVvRFDQfota7Eg4kAqBr6TgxTXP6_LKhAo72HpN2yYylJ7m3lK1tpYuKekJzhxY8emOKmRImc7ijKLRnbfRLFwrSu2nL58tH9-VWExtfWwX3P1woGqEy92B-VwiT22IWwk-EpQ5-ecEr_6ClwOmF7fGt-3yPxiCmtF")',
-                  }}
-                ></div>
-                <div>
-                  <p className="font-bold text-sm text-neutral-text-main dark:text-white">
-                    Himalayan Pink Salt
-                  </p>
-                  <p className="text-xs text-neutral-text-secondary font-medium">
-                    Pantry • In Stock
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-neutral-text-main dark:text-white">
-                  $8.50
-                  <span className="text-xs font-normal text-gray-500">/kg</span>
-                </p>
-                <span className="text-xs text-neutral-text-secondary hidden group-hover:inline-block">
-                  Click to add
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
         )}
       </div>
@@ -156,4 +224,4 @@ const RecipeIngredient = () => {
   );
 };
 
-export default RecipeIngredient
+export default RecipeIngredient;

@@ -1,4 +1,4 @@
-import { supabase } from '../config/supabaseClient.js';
+import { supabase } from "../config/supabaseClient.js";
 
 export const getCategories = async (req, res) => {
   try {
@@ -20,13 +20,15 @@ export const getIngredients = async (req, res) => {
     const user_id = req.user.id;
 
     const { data, error } = await supabase
-      .from('ingredients')
-      .select(`
+      .from("ingredients")
+      .select(
+        `
         *,
         ingredient_categories (name)
-      `)
-      .eq('user_id', user_id)
-      .order('updated_at', { ascending: false });
+      `,
+      )
+      .eq("user_id", user_id)
+      .order("updated_at", { ascending: false });
 
     if (error) throw error;
 
@@ -36,23 +38,22 @@ export const getIngredients = async (req, res) => {
   }
 };
 
-
 export const createIngredient = async (req, res) => {
   const { name, category_id, purchase_price, unit, image_url } = req.body;
   const user_id = req.user.id;
 
   try {
     const { data, error } = await supabase
-      .from('ingredients')
+      .from("ingredients")
       .insert([
-        { 
-          name, 
-          category_id, 
-          purchase_price: parseFloat(purchase_price), 
-          unit, 
+        {
+          name,
+          category_id,
+          purchase_price: parseFloat(purchase_price),
+          unit,
           image_url,
-          user_id 
-        }
+          user_id,
+        },
       ])
       .select();
 
@@ -63,7 +64,6 @@ export const createIngredient = async (req, res) => {
   }
 };
 
-
 export const updateIngredient = async (req, res) => {
   const { id } = req.params;
   const { name, category_id, purchase_price, unit, image_url } = req.body;
@@ -71,23 +71,25 @@ export const updateIngredient = async (req, res) => {
 
   try {
     const { data, error } = await supabase
-      .from('ingredients')
+      .from("ingredients")
       .update({
         name,
         category_id,
         purchase_price: parseFloat(purchase_price),
         unit,
         image_url,
-        updated_at: new Date()
+        updated_at: new Date(),
       })
-      .eq('id', id)
-      .eq('user_id', user_id)
+      .eq("id", id)
+      .eq("user_id", user_id)
       .select();
 
     if (error) throw error;
 
     if (data.length === 0) {
-      return res.status(404).json({ error: "Ingredient not found or unauthorized" });
+      return res
+        .status(404)
+        .json({ error: "Ingredient not found or unauthorized" });
     }
 
     res.status(200).json(data[0]);
