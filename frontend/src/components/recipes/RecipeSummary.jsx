@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
-  const [targetMargin, setTargetMargin] = useState(25);
+  const [targetMargin, setTargetMargin] = useState(45);
   const [taxRate, setTaxRate] = useState(7);
 
   useEffect(() => {
@@ -40,6 +40,23 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
     setSummaryData,
   ]);
 
+
+  const handlePercentChange = (e) => {
+    const { name, value } = e.target;
+    let val = value;
+
+    if (val !== "") {
+      if (val > 99) val = 99;
+      else if (val < 0) val = 0;
+    }
+    
+    if (name === "targetMargin") {
+      setTargetMargin(val);
+    } else if (name === "taxRate") {
+      setTaxRate(val);
+    }
+  };
+
   return (
     <>
       <div className="bg-neutral-text-main dark:bg-gray-900 text-white rounded-xl shadow-lg border border-neutral-text-main dark:border-gray-800 overflow-hidden shrink-0">
@@ -74,7 +91,7 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
                   Target Margin %
                 </label>
                 <span className="text-xs text-primary font-bold">
-                  Recommended: 25%
+                  Recommended: 45%
                 </span>
               </div>
               <div className="relative">
@@ -82,7 +99,8 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
                   className="w-full bg-gray-800 border-gray-700 rounded-lg text-white font-bold pr-8 focus:border-primary focus:ring-primary"
                   type="number"
                   value={targetMargin}
-                  onChange={(e) => setTargetMargin(e.target.value)}
+                  name="targetMargin"
+                  onChange={handlePercentChange}
                 />
                 <span className="absolute right-3 top-2.5 text-gray-400 font-bold">
                   %
@@ -98,7 +116,8 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
                   className="w-full bg-gray-800 border-gray-700 rounded-lg text-white font-bold pr-8 focus:border-primary focus:ring-primary"
                   type="number"
                   value={taxRate}
-                  onChange={(e) => setTaxRate(e.target.value)}
+                  name="taxRate"
+                  onChange={handlePercentChange}
                 />
                 <span className="absolute right-3 top-2.5 text-gray-400 font-bold">
                   %
@@ -129,7 +148,7 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
                 ฿
               </span>
               <input
-                className="w-full pl-7 text-right bg-primary text-neutral-text-main font-black text-xl rounded-lg border-none focus:ring-2 focus:ring-white h-12"
+                className="no-spinner w-full pl-7 text-right bg-primary text-neutral-text-main font-black text-xl rounded-lg border-none ring-2 ring-white focus:ring-2 focus:ring-white h-12"
                 type="number"
                 value={summaryData.actualSellingPrice}
                 onChange={(e) =>
@@ -141,17 +160,19 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
               />
             </div>
           </label>
-          <div className="mt-4 flex justify-between text-xs font-medium">
-            <span className="text-gray-400">Actual Cost %</span>
-            <span className="text-primary">
-              {summaryData.actualCostPercent || "0.00"}%
-            </span>
-          </div>
-          <div className="mt-1 flex justify-between text-xs font-medium">
-            <span className="text-gray-400">Actual Margin %</span>
-            <span className="text-white">
-              {summaryData.actualMarginPercent || "0.00"}%
-            </span>
+          <div className="lg:hidden xl:block">
+            <div className="mt-4 flex justify-between text-xs font-medium">
+              <span className="text-gray-400">Actual Cost %</span>
+              <span className="text-primary">
+                {summaryData.actualCostPercent || "0.00"}%
+              </span>
+            </div>
+            <div className="mt-1 flex justify-between text-xs font-medium">
+              <span className="text-gray-400">Actual Margin %</span>
+              <span className="text-white">
+                {summaryData.actualMarginPercent || "0.00"}%
+              </span>
+            </div>
           </div>
         </div>
       </div>
