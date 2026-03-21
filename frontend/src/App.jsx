@@ -5,6 +5,7 @@ import InventoryPage from "./pages/InventoryPage";
 import RecipePage from "./pages/RecipePage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       </Route>
 
       <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/inventory" element={<InventoryPage />} />
         <Route path="/recipes" element={<RecipePage />} />
       </Route>
