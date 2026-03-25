@@ -120,11 +120,6 @@ const Navbar = () => {
                   href="/recipes"
                   icon="restaurant_menu"
                 />
-                <MobileNavLink
-                  label="Settings"
-                  href="/settings"
-                  icon="settings"
-                />
               </div>
             </nav>
           </div>

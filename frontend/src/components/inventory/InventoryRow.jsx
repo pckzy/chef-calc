@@ -55,12 +55,12 @@ const InventoryRow = ({ ingredient, onClick }) => {
           }}
           aria-label={ingredient.name}
         ></div>
-        <div>
+        <div className="">
           <p className="font-bold text-sm text-neutral-text-main dark:text-white leading-tight">
             {ingredient.name}
           </p>
-          <p className="text-xs text-neutral-text-secondary md:hidden">
-            Pantry
+          <p className={`text-xs w-fit ${getCategoryColor(ingredient.ingredient_categories?.name)} md:hidden`}>
+            {ingredient.ingredient_categories?.name || "Uncategorized"}
           </p>
         </div>
       </div>

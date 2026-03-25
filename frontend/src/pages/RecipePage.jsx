@@ -39,6 +39,7 @@ const RecipePage = () => {
     if (!recipeData.categoryId) return toast.error("Please select category.");
     if (ingredients.length === 0)
       return toast.error("Please add at least one ingredient.");
+    if (summaryData.actualSellingPrice <= 0) return toast.error("Invalid selling price. Price must be more than ฿0.");
 
     setIsPublishing(true);
     let finalImageUrl = recipeData.image_url;

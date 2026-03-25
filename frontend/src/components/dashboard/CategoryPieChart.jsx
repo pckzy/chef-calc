@@ -74,7 +74,8 @@ const CategoryPieChart = ({ data }) => {
                   <Pie
                     data={data.map((item, index) => ({
                       ...item,
-                      fill: COLORS[index % COLORS.length],
+                      fill: COLORS[item.name],
+                      // fill: COLORS[index % COLORS.length],
                     }))}
                     cx={isMobile ? "50%" : "35%"}
                     cy={isMobile ? "45%" : "50%"}

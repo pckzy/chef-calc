@@ -1,5 +1,6 @@
 import api from "../../lib/axios";
 import { useState } from "react";
+import { COLORS_CATEGORY } from "../data/dashboardMockData";
 
 const PerformanceTable = ({ data = [], onRefresh }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,8 +77,12 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
                     ></div>
                     {recipe.name}
                   </td>
-                  <td className="px-6 py-4 text-neutral-text-secondary">
-                    {recipe.category}
+                  <td className="px-6 py-4">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${COLORS_CATEGORY[recipe.category]}`}
+                    >
+                      {recipe.category}
+                    </span>
                   </td>
                   <td className="px-6 py-4 text-right font-medium">
                     ฿ {recipe.cost.toFixed(2)}
