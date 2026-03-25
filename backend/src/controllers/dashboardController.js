@@ -32,7 +32,7 @@ export const getAnalytics = async (req, res) => {
         recipe_ingredients (
           qty,
           unit,
-          ingredients ( purchase_price, unit ) 
+          ingredients ( name, purchase_price, unit ) 
         )
       `)
       .eq("user_id", userId);
@@ -40,6 +40,25 @@ export const getAnalytics = async (req, res) => {
     if (errRec) throw errRec;
 
     const revenueData = (rawRecipes || []).map((recipe) => {
+
+      const ingredientList = recipe.recipe_ingredients?.map((ri) => {
+        const purchasePrice = Number(ri.ingredients?.purchase_price || 0);
+        const purchaseUnit = ri.ingredients?.unit;
+        const recipeUnit = ri.unit;
+        const quantity = Number(ri.qty || 0);
+
+        // คำนวณราคาต่อหน่วยที่ใช้ในสูตร (เช่น ราคาต่อกรัม)
+        const pricePerSmallUnit = getPricePerUnit(purchasePrice, purchaseUnit, recipeUnit);
+        const subtotal = pricePerSmallUnit * quantity;
+
+        return {
+          name: ri.ingredients?.name || "Unknown Ingredient",
+          quantity: quantity,
+          unit: recipeUnit,
+          unit_cost: pricePerSmallUnit, // ราคาต่อหน่วยที่แปลงแล้ว
+          total: Number(subtotal.toFixed(2))
+        };
+      }) || [];
       
       const currentFoodCost = recipe.recipe_ingredients?.reduce((sum, ri) => {
         const purchasePrice = Number(ri.ingredients?.purchase_price || 0);
@@ -65,6 +84,7 @@ export const getAnalytics = async (req, res) => {
         profit: Number(profit.toFixed(2)),
         margin: Number(margin.toFixed(2)),
         image: recipe.image_url,
+        ingredients: ingredientList,
       };
     });
 

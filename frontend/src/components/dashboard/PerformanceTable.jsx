@@ -7,9 +7,18 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const openDeleteModal = (recipe) => {
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [recipeDetails, setRecipeDetails] = useState(null);
+
+  const openDeleteModal = (e, recipe) => {
+    e.stopPropagation();
     setSelectedRecipe(recipe);
     setIsModalOpen(true);
+  };
+
+  const openDetailsModal = (recipe) => {
+    setRecipeDetails(recipe);
+    setIsDetailsOpen(true);
   };
 
   const handleDelete = async () => {
@@ -66,6 +75,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
               data.slice(0, 5).map((recipe, index) => (
                 <tr
                   key={index}
+                  onClick={() => openDetailsModal(recipe)}
                   className="group hover:bg-neutral-surface/50 dark:hover:bg-gray-800/50 transition-colors"
                 >
                   <td className="px-6 py-4 font-medium text-neutral-text-main dark:text-white flex items-center gap-3">
@@ -108,7 +118,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
-                      onClick={() => openDeleteModal(recipe)}
+                      onClick={(e) => openDeleteModal(e, recipe)}
                       className="text-red-600 hover:text-red-800 transition-colors"
                     >
                       <span className="material-symbols-outlined text-[20px]">
@@ -128,10 +138,10 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
           <div className="py-12 text-center text-neutral-text-secondary italic">No recipe data available.</div>
         ) : (
           data.slice(0, 5).map((recipe, index) => (
-            <div key={index} className="flex flex-col overflow-hidden rounded-xl bg-white dark:bg-gray-900 shadow-lg border border-neutral-border dark:border-gray-800 relative">
+            <div key={index} onClick={() => openDetailsModal(recipe)} className="flex flex-col overflow-hidden rounded-xl bg-white dark:bg-gray-900 shadow-lg border border-neutral-border dark:border-gray-800 relative">
               
               <button 
-                onClick={() => openDeleteModal(recipe)}
+                onClick={(e) => openDeleteModal(e, recipe)}
                 className="absolute top-3 right-3 z-10 size-9 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg active:scale-95 transition-transform"
               >
                 <span className="material-symbols-outlined text-[20px]">delete</span>
@@ -180,6 +190,80 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
           ))
         )}
       </div>
+
+      {/* 🔴 3. Modal รายละเอียด (Recipe Details) */}
+      {isDetailsOpen && recipeDetails && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-xl shadow-2xl border border-neutral-border dark:border-gray-800 flex flex-col overflow-hidden animate-scale-up">
+            <div className="px-6 py-4 border-b border-neutral-border dark:border-gray-800 flex items-center justify-between">
+              <h3 className="text-xl font-bold text-neutral-text-main dark:text-white">
+                Recipe Details: {recipeDetails.name}
+              </h3>
+              <button onClick={() => setIsDetailsOpen(false)} className="size-8 flex items-center justify-center rounded-full hover:bg-neutral-surface dark:hover:bg-gray-800 text-neutral-text-secondary transition-colors">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto max-h-[60vh]">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="text-neutral-text-secondary dark:text-gray-400 text-xs uppercase tracking-wider font-semibold border-b border-neutral-border dark:border-gray-800">
+                    <th className="pb-3 px-2">Ingredient Name</th>
+                    <th className="pb-3 px-2 text-right">Quantity</th>
+                    <th className="pb-3 px-2 text-right">Unit Cost</th>
+                    <th className="pb-3 px-2 text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-neutral-border dark:divide-gray-800">
+                  {/* 🟢 สมมติว่าใน recipeDetails มีข้อมูล ingredients มาให้แล้ว */}
+                  {recipeDetails.ingredients?.map((ing, idx) => (
+                    <tr key={idx}>
+                      <td className="py-3 px-2 text-sm text-neutral-text-main dark:text-white">{ing.name}</td>
+                      <td className="py-3 px-2 text-sm text-right text-neutral-text-secondary dark:text-gray-400 font-medium">
+                        {ing.quantity} {ing.unit}
+                      </td>
+                      <td className="py-3 px-2 text-sm text-right text-neutral-text-secondary dark:text-gray-400">
+                        ฿{(ing.unit_cost || 0).toFixed(2)}/{ing.unit}
+                      </td>
+                      <td className="py-3 px-2 text-sm text-right text-neutral-text-main dark:text-white font-bold">
+                        ฿{(ing.quantity * (ing.unit_cost || 0)).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="px-6 py-6 bg-background-light dark:bg-gray-800/30 border-t border-neutral-border dark:border-gray-800">
+              <div className="grid grid-cols-3 gap-4">
+                <div className="flex flex-col">
+                  <span className="text-xs text-neutral-text-secondary uppercase font-semibold">Total Cost</span>
+                  <span className="text-lg font-bold text-neutral-text-main dark:text-white">฿{recipeDetails.cost.toFixed(2)}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-neutral-text-secondary uppercase font-semibold">Selling Price</span>
+                  <span className="text-lg font-bold text-neutral-text-main dark:text-white">฿{recipeDetails.sellingPrice.toFixed(2)}</span>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className="text-xs text-neutral-text-secondary uppercase font-semibold">Margin %</span>
+                  <span className={`px-3 py-1 rounded-full text-lg font-bold ${
+                      recipeDetails.margin >= 60 ? "bg-green-500/10 text-green-600 dark:text-green-400" :
+                      recipeDetails.margin >= 30 ? "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400" :
+                      "bg-red-500/10 text-red-600 dark:text-red-400"
+                  }`}>
+                    {recipeDetails.margin.toFixed(1)}%
+                  </span>
+                </div>
+              </div>
+              <div className="mt-6 flex justify-end">
+                <button onClick={() => setIsDetailsOpen(false)} className="px-6 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all shadow-md">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
