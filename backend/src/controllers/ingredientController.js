@@ -97,3 +97,32 @@ export const updateIngredient = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const deleteIngredient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const { error } = await supabase
+      .from("ingredients")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", userId);
+
+    if (error) {
+      // ถ้าลบไม่ได้เพราะวัตถุดิบนี้ถูกใช้อยู่ในบาง Recipe (Foreign Key Error)
+      if (error.code === "23503") {
+        return res.status(400).json({
+          error:
+            "Cannot delete: This ingredient is currently used in one or more recipes.",
+        });
+      }
+      throw error;
+    }
+
+    res.status(200).json({ message: "Ingredient deleted successfully" });
+  } catch (error) {
+    console.error("Delete Ingredient Error:", error);
+    res.status(500).json({ error: error.message || "Internal Server Error" });
+  }
+};

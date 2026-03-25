@@ -4,6 +4,7 @@ import {
   getIngredients,
   createIngredient,
   updateIngredient,
+  deleteIngredient,
 } from "../controllers/ingredientController.js";
 import { authenticate } from "../middleware/authMiddleware.js";
 
@@ -12,6 +13,7 @@ const router = express.Router();
 router.get("/", authenticate, getIngredients);
 router.post("/", authenticate, createIngredient);
 router.put("/:id", authenticate, updateIngredient);
+router.delete("/:id", authenticate, deleteIngredient);
 router.get("/categories", authenticate, getCategories);
 
 export default router;

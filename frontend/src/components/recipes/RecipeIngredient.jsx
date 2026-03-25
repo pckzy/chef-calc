@@ -77,7 +77,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
       priceInfo: `฿${formatNumber(item.purchase_price)}/${baseU}`,
       imgUrl:
         item.image_url ||
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBPQspWHU_ME5D1MzmL8uRL9n4W_ft7ctlEN2tIe2irbHXwVzFTlGcXGq_iDmuHtbolZj_oeJ0JGp9Yzy499AcJYcJZmzbijT93inPkUEf6zSxjA9vtjok74ozhIJZOTKEvtk9iCvXANyGysbnWCMx9BFEUvsBwWgezw0QlJXwpmvdXc_rDmp7Wmfgug8Gk1gYffyhG4BNag2GkZpLznL0m7ANg_LHas1Z6Z0NwYUsDPCLwtR1sW3crPxKepIvLD4hS493n5fhe-g9M",
+        "https://e7.pngegg.com/pngimages/990/965/png-clipart-prohibition-in-the-united-states-computer-icons-symbol-none-angle-sign-thumbnail.png",
       qty: 1,
       unit: baseU,
       baseUnit: baseU,
@@ -192,7 +192,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
                   <div
                     className="size-10 rounded-md bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-gray-600"
                     style={{
-                      backgroundImage: `url("${item.image_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuBPQspWHU_ME5D1MzmL8uRL9n4W_ft7ctlEN2tIe2irbHXwVzFTlGcXGq_iDmuHtbolZj_oeJ0JGp9Yzy499AcJYcJZmzbijT93inPkUEf6zSxjA9vtjok74ozhIJZOTKEvtk9iCvXANyGysbnWCMx9BFEUvsBwWgezw0QlJXwpmvdXc_rDmp7Wmfgug8Gk1gYffyhG4BNag2GkZpLznL0m7ANg_LHas1Z6Z0NwYUsDPCLwtR1sW3crPxKepIvLD4hS493n5fhe-g9M"}")`,
+                      backgroundImage: `url("${item.image_url || "https://e7.pngegg.com/pngimages/990/965/png-clipart-prohibition-in-the-united-states-computer-icons-symbol-none-angle-sign-thumbnail.png"}")`,
                     }}
                   ></div>
                   <div>

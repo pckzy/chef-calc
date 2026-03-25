@@ -27,7 +27,6 @@ const AddIngredientDrawer = ({
     if (isOpen) {
       setIsRendered(true);
       if (editData) {
-        console.log("im here");
         setFormData({
           name: editData.name,
           category_id: editData.category_id,

@@ -100,11 +100,12 @@ const InventoryPage = () => {
             onSearch={onSearch}
           />
           <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-neutral-surface/50 dark:bg-gray-800/50 text-xs font-semibold text-neutral-text-secondary uppercase tracking-wider border-b border-neutral-border dark:border-gray-800">
-            <div className="col-span-4">Ingredient Name</div>
+            <div className="col-span-3">Ingredient Name</div>
             <div className="col-span-2">Category</div>
             <div className="col-span-2 text-right">Price</div>
             <div className="col-span-2">Unit</div>
             <div className="col-span-2 text-right">Last Updated</div>
+            <div className="col-span-1 text-right"></div>
           </div>
           <div className="divide-y divide-neutral-border dark:divide-gray-800">
             {loading ? (
@@ -115,6 +116,7 @@ const InventoryPage = () => {
                   key={ingredient.id}
                   ingredient={ingredient}
                   onClick={() => handleEditClick(ingredient)}
+                  onRefresh={fetchIngredients}
                 />
               ))
             )}
