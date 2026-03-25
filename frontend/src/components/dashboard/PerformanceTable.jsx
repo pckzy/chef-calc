@@ -38,7 +38,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
           Recent Recipe Performance
         </h3>
       </div>
-      <div className="overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-left text-sm whitespace-nowrap">
           <thead className="bg-neutral-surface dark:bg-gray-800 text-neutral-text-secondary uppercase text-xs font-semibold tracking-wider">
             <tr>
@@ -98,7 +98,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
                       {recipe.margin.toFixed(1)}%
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right font-bold text-primary">
+                  <td className={`px-6 py-4 text-right font-bold ${recipe.profit.toFixed(2) > 0 ? 'text-primary' : 'text-red-600'}`}>
                     ฿ {recipe.profit.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -116,6 +116,64 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
             )}
           </tbody>
         </table>
+      </div>
+
+      <div className="md:hidden flex flex-col gap-4 bg-neutral-surface/20 dark:bg-gray-800/10">
+        {data.length === 0 ? (
+          <div className="py-12 text-center text-neutral-text-secondary italic">No recipe data available.</div>
+        ) : (
+          data.slice(0, 5).map((recipe, index) => (
+            <div key={index} className="flex flex-col overflow-hidden rounded-xl bg-white dark:bg-gray-900 shadow-lg border border-neutral-border dark:border-gray-800 relative">
+              
+              <button 
+                onClick={() => openDeleteModal(recipe)}
+                className="absolute top-3 right-3 z-10 size-9 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+              >
+                <span className="material-symbols-outlined text-[20px]">delete</span>
+              </button>
+
+              <div
+                className="h-40 w-full bg-center bg-no-repeat bg-cover"
+                style={{ backgroundImage: `url("${recipe.image || "https://via.placeholder.com/150"}")` }}
+              ></div>
+
+              <div className="p-4 flex flex-col gap-3">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-neutral-text-secondary dark:text-gray-400 text-xs uppercase tracking-wider font-semibold">
+                      {recipe.category}
+                    </p>
+                    <h3 className="text-neutral-text-main dark:text-white text-lg font-bold leading-tight mt-0.5">
+                      {recipe.name}
+                    </h3>
+                  </div>
+                  <div className={`px-2 py-1 rounded text-xs font-bold ${
+                      recipe.margin >= 60 ? "bg-green-500/10 text-green-600 dark:text-green-400" :
+                      recipe.margin >= 30 ? "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400" :
+                      "bg-red-500/10 text-red-600 dark:text-red-400"
+                  }`}>
+                    {recipe.margin.toFixed(1)}% Margin
+                  </div>
+                </div>
+
+                <div className="flex border-t border-neutral-border dark:border-gray-800 pt-3 justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-neutral-text-secondary dark:text-gray-500 text-[10px] uppercase font-bold tracking-tighter">Cost</span>
+                    <span className="text-neutral-text-main dark:text-white font-semibold">฿ {recipe.cost.toFixed(2)}</span>
+                  </div>
+                  <div className="flex flex-col text-right">
+                    <span className="text-neutral-text-secondary dark:text-gray-500 text-[10px] uppercase font-bold tracking-tighter">Sell Price</span>
+                    <span className="text-neutral-text-main dark:text-white font-semibold">฿ {recipe.sellingPrice.toFixed(2)}</span>
+                  </div>
+                  <div className="flex flex-col text-right">
+                    <span className="text-neutral-text-secondary dark:text-gray-500 text-[10px] uppercase font-bold tracking-tighter">Profit (฿)</span>
+                    <span className={`${recipe.profit.toFixed(2) > 0 ? 'text-primary' : 'text-red-600'} dark:text-white font-semibold`}>฿ {recipe.profit.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {isModalOpen && (
