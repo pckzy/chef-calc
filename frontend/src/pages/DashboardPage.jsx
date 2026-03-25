@@ -14,20 +14,20 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      try {
-        setLoading(true);
-        // 🟢 เรียกผ่าน Axios instance ที่จัดการ Token ให้แล้ว
-        const response = await api.get("/dashboard/analytics");
-        setData(response.data);
-      } catch (error) {
-        console.error("Error loading dashboard:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchDashboard = async () => {
+    try {
+      setLoading(true);
+      // 🟢 เรียกผ่าน Axios instance ที่จัดการ Token ให้แล้ว
+      const response = await api.get("/dashboard/analytics");
+      setData(response.data);
+    } catch (error) {
+      console.error("Error loading dashboard:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchDashboard();
   }, []);
 
@@ -75,7 +75,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Performance Table */}
-        <PerformanceTable data={data?.revenueData} />
+        <PerformanceTable data={data?.revenueData} onRefresh={fetchDashboard} />
       </main>
     </div>
   );

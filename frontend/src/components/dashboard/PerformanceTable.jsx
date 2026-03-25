@@ -1,6 +1,33 @@
-import React from "react";
+import api from "../../lib/axios";
+import { useState } from "react";
 
-const PerformanceTable = ({ data = [] }) => {
+const PerformanceTable = ({ data = [], onRefresh }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const openDeleteModal = (recipe) => {
+    setSelectedRecipe(recipe);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedRecipe) return;
+
+    try {
+      setIsDeleting(true);
+      await api.delete(`/recipes/${selectedRecipe.id}`);
+
+      setIsModalOpen(false);
+      if (onRefresh) onRefresh();
+    } catch (error) {
+      console.error("Delete Error:", error);
+      alert("Failed to delete recipe. Please try again.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-neutral-border dark:border-gray-800 overflow-hidden">
       <div className="p-5 border-b border-neutral-border dark:border-gray-800 flex justify-between items-center">
@@ -75,9 +102,12 @@ const PerformanceTable = ({ data = [] }) => {
                     ฿ {recipe.profit.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button className="text-neutral-text-secondary hover:text-primary transition-colors">
+                    <button
+                      onClick={() => openDeleteModal(recipe)}
+                      className="text-red-600 hover:text-red-800 transition-colors"
+                    >
                       <span className="material-symbols-outlined text-[20px]">
-                        edit
+                        delete
                       </span>
                     </button>
                   </td>
@@ -87,6 +117,45 @@ const PerformanceTable = ({ data = [] }) => {
           </tbody>
         </table>
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-gray-900 w-full max-w-md rounded-xl shadow-2xl border border-neutral-border dark:border-gray-800 overflow-hidden transform transition-all animate-scale-up">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-4 text-red-600">
+                <span className="material-symbols-outlined text-3xl">
+                  warning
+                </span>
+                <h3 className="text-xl font-bold text-neutral-text-main dark:text-white">
+                  Delete Recipe?
+                </h3>
+              </div>
+              <p className="text-neutral-text-secondary dark:text-gray-400 leading-relaxed">
+                Are you sure you want to delete{" "}
+                <strong className="text-neutral-text-main dark:text-white">
+                  "{selectedRecipe?.name}"
+                </strong>
+                ? This action cannot be undone.
+              </p>
+            </div>
+            <div className="bg-neutral-surface dark:bg-gray-800/50 px-6 py-4 flex flex-col sm:flex-row-reverse gap-3">
+              <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="flex-1 sm:flex-none px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
+              </button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="flex-1 sm:flex-none px-6 py-2.5 bg-white dark:bg-gray-800 border border-neutral-border dark:border-gray-700 text-neutral-text-main dark:text-white text-sm font-bold rounded-lg hover:bg-neutral-surface dark:hover:bg-gray-700 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

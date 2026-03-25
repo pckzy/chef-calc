@@ -66,3 +66,32 @@ export const getCategories = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+export const removeRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const { error: ingError } = await supabase
+      .from("recipe_ingredients")
+      .delete()
+      .eq("recipe_id", id);
+
+    if (ingError) throw ingError;
+
+    const { error: recipeError } = await supabase
+      .from("recipes")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", userId);
+
+    if (recipeError) throw recipeError;
+
+    res.status(200).json({ 
+      message: "Recipe and its ingredients have been removed successfully" 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
