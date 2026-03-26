@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import api from "../../lib/axios";
 import supabase from "../../lib/supabase";
+import { toast } from "react-hot-toast";
 
 const AddIngredientDrawer = ({
   isOpen,
@@ -62,6 +63,16 @@ const AddIngredientDrawer = ({
   };
 
   const handleSave = async () => {
+    if (!formData.name.trim()) {
+      return toast.error("Please enter the ingredient name.");
+    }
+    if (!formData.category_id) {
+      return toast.error("Please select a category for this ingredient.");
+    }
+    if (!formData.purchase_price || formData.purchase_price <= 0) {
+      return toast.error("Please enter a valid purchase price.");
+    }
+
     try {
       setIsSubmitting(true);
       let final_image_url = imagePreview;
@@ -87,15 +98,17 @@ const AddIngredientDrawer = ({
 
       if (editData) {
         await api.put(`/ingredients/${editData.id}`, payload);
+        toast.success("Ingredient updated successfully!");
       } else {
         await api.post("/ingredients", payload);
+        toast.success("New ingredient added to inventory!");
       }
 
       if (onSaveSuccess) onSaveSuccess();
       onClose();
     } catch (err) {
       console.error("Error saving ingredient:", err);
-      alert("Failed to save ingredient");
+      toast.error(err.response?.data?.error || "Failed to save ingredient. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
