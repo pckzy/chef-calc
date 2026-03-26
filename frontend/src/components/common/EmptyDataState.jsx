@@ -3,7 +3,7 @@ const EmptyDataState = ({
   message = "Start by adding your first record to see insights.",
 }) => (
   <div className="flex flex-col items-center justify-center h-full w-full py-10 animate-fade-in">
-    <div className="size-16 rounded-full bg-neutral-surface dark:bg-gray-800 flex items-center justify-center text-neutral-text-secondary dark:text-gray-500 mb-4 border border-dashed border-neutral-border dark:border-gray-700">
+    <div className="size-16 rounded-full bg-neutral-surface dark:bg-background-dark flex items-center justify-center text-neutral-text-secondary dark:text-primary mb-4 border border-dashed border-neutral-border dark:border-gray-700">
       <span className="material-symbols-outlined text-[32px]">
         database_off
       </span>

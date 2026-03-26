@@ -27,7 +27,7 @@ const LoginForm = () => {
       localStorage.setItem("sb-access-token", session.access_token);
 
       console.log("Login Success!");
-      navigate("/inventory");
+      navigate("/dashboard");
     } catch (err) {
       const errorMessage =
         "Login failed. Please check your credentials and try again.";

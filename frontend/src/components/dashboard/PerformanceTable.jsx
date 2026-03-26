@@ -152,7 +152,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
                 style={{ backgroundImage: `url("${recipe.image || "https://via.placeholder.com/150"}")` }}
               ></div>
 
-              <div className="p-4 flex flex-col gap-3">
+              <div className="p-4 flex flex-col gap-3 dark:bg-surface-dark">
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="text-neutral-text-secondary dark:text-gray-400 text-xs uppercase tracking-wider font-semibold">
@@ -171,7 +171,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
                   </div>
                 </div>
 
-                <div className="flex border-t border-neutral-border dark:border-gray-800 pt-3 justify-between">
+                <div className="flex border-t border-neutral-border dark:border-border-dark pt-3 justify-between">
                   <div className="flex flex-col">
                     <span className="text-neutral-text-secondary dark:text-gray-500 text-[10px] uppercase font-bold tracking-tighter">Cost</span>
                     <span className="text-neutral-text-main dark:text-white font-semibold">฿ {recipe.cost.toFixed(2)}</span>
@@ -199,7 +199,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
               <h3 className="text-xl font-bold text-neutral-text-main dark:text-white">
                 Recipe Details: {recipeDetails.name}
               </h3>
-              <button onClick={() => setIsDetailsOpen(false)} className="size-8 flex items-center justify-center rounded-full hover:bg-neutral-surface dark:hover:bg-background-dark text-neutral-text-secondary transition-colors">
+              <button onClick={() => setIsDetailsOpen(false)} className="size-8 flex items-center justify-center rounded-full hover:bg-neutral-surface dark:hover:bg-primary/10 text-neutral-text-secondary transition-colors">
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
@@ -234,7 +234,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
               </table>
             </div>
 
-            <div className="px-6 py-6 bg-background-light dark:bg-gray-800/30 border-t border-neutral-border dark:border-border-dark">
+            <div className="px-6 py-6 bg-background-light dark:bg-background-dark/70 border-t border-neutral-border dark:border-border-dark">
               <div className="grid grid-cols-3 gap-4">
                 <div className="flex flex-col">
                   <span className="text-xs text-neutral-text-secondary uppercase font-semibold">Total Cost</span>
@@ -256,7 +256,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
                 </div>
               </div>
               <div className="mt-6 flex justify-end">
-                <button onClick={() => setIsDetailsOpen(false)} className="px-6 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all shadow-md">
+                <button onClick={() => setIsDetailsOpen(false)} className="px-6 py-2 bg-primary text-white dark:text-black font-semibold rounded-lg hover:bg-primary/90 transition-all shadow-md">
                   Close
                 </button>
               </div>

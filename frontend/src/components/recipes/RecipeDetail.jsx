@@ -67,7 +67,7 @@ const RecipeDetail = ({
                 </div>
               </>
             ) : (
-              <div className="text-center p-6">
+              <div className="text-center p-6 dark:hover:bg-surface-dark w-full h-full flex flex-col items-center justify-center">
                 <div className="mx-auto h-12 w-12 text-neutral-text-secondary group-hover:text-primary transition-colors flex items-center justify-center rounded-full bg-white/50 dark:bg-gray-700 group-hover:scale-110 duration-200">
                   <span className="material-symbols-outlined text-[24px]">
                     add_a_photo

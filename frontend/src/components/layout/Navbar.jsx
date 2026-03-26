@@ -118,7 +118,7 @@ const Navbar = () => {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden flex items-center justify-center size-10 rounded-lg text-neutral-text-secondary hover:bg-neutral-surface dark:hover:bg-gray-800 transition-colors"
+          className="md:hidden flex items-center justify-center size-10 rounded-lg text-neutral-text-secondary hover:bg-neutral-surface dark:hover:bg-primary/10 transition-colors"
         >
           <span className="material-symbols-outlined">
             {isMenuOpen ? "close" : "menu"}
@@ -134,7 +134,7 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(false)}
           />
 
-          <div className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 border-b border-neutral-border dark:border-gray-800 md:hidden z-50 shadow-2xl animate-in slide-in-from-top duration-300 ease-out">
+          <div className="absolute top-full left-0 w-full bg-white dark:bg-background-dark border-b border-neutral-border dark:border-gray-800 md:hidden z-50 shadow-2xl animate-in slide-in-from-top duration-300 ease-out">
             <nav className="p-4 space-y-2">
               <div
                 className="grid grid-cols-1 gap-1"

@@ -122,14 +122,14 @@ const InventoryPage = () => {
             )}
 
             {!loading && filteredIngredients.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-20 px-4 bg-white dark:bg-background-dark rounded-2xl border-2 border-dashed border-neutral-border dark:border-gray-800 transition-all">
-                <div className="w-20 h-20 bg-neutral-surface dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-4xl text-neutral-text-secondary dark:text-neutral-text-secondary-dark opacity-50">
+              <div className="flex flex-col items-center justify-center py-20 px-4 bg-white dark:bg-background-dark rounded-2xl border-2 border-dashed border-neutral-border dark:border-border-dark transition-all">
+                <div className="w-20 h-20 bg-neutral-surface dark:bg-surface-dark rounded-full flex items-center justify-center mb-6">
+                  <span className="material-symbols-outlined text-4xl text-neutral-text-secondary dark:text-primary opacity-50">
                     inventory_2
                   </span>
                 </div>
 
-                <h3 className="text-xl font-medium text-neutral-text-main dark:text-white tracking-tight">
+                <h3 className="text-xl font-medium text-neutral-text-main dark:text-neutral-text-secondary tracking-tight">
                   No ingredients found
                 </h3>
                 {(searchName || selectedCategory) && (

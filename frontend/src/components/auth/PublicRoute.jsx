@@ -4,7 +4,7 @@ const PublicRoute = () => {
   const token = localStorage.getItem("sb-access-token");
 
   if (token) {
-    return <Navigate to="/inventory" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;

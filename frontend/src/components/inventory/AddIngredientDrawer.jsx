@@ -144,7 +144,7 @@ const AddIngredientDrawer = ({
           </div>
           <button
             onClick={onClose}
-            className="text-neutral-text-secondary hover:text-neutral-text-main transition-colors p-1 rounded-md hover:bg-neutral-surface dark:hover:bg-gray-800"
+            className="text-neutral-text-secondary transition-colors p-1 rounded-md hover:bg-neutral-surface dark:hover:bg-primary/10"
           >
             <span className="material-symbols-outlined">close</span>
           </button>
@@ -167,7 +167,7 @@ const AddIngredientDrawer = ({
 
             <div
               onClick={() => fileInputRef.current.click()}
-              className="relative flex justify-center items-center rounded-xl border-2 border-dashed border-neutral-border dark:border-border-dark hover:border-primary hover:bg-neutral-surface/30 dark:hover:bg-gray-800/30 transition-all cursor-pointer group overflow-hidden h-52 w-full" // เพิ่ม h-52 และ overflow-hidden
+              className="relative flex justify-center items-center rounded-xl border-2 border-dashed border-neutral-border dark:border-border-dark hover:border-primary hover:bg-neutral-surface/30 dark:hover:bg-surface-dark transition-all cursor-pointer group overflow-hidden h-52 w-full" // เพิ่ม h-52 และ overflow-hidden
             >
               {imagePreview ? (
                 <div className="relative w-full h-full">
@@ -334,7 +334,7 @@ const AddIngredientDrawer = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="border-t border-neutral-border dark:border-gray-800 p-6 bg-background-light dark:bg-background-dark/50">
+        <div className="border-t border-neutral-border dark:border-border-dark p-6 bg-background-light dark:bg-background-dark/50">
           <div className="flex gap-3">
             <button
               onClick={onClose}

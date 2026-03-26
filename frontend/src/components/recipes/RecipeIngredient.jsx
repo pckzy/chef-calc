@@ -157,7 +157,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
             <span className="material-symbols-outlined">search</span>
           </span>
           <input
-            className="pl-10 pr-16 py-3 bg-white dark:bg-gray-900 border-2 border-primary rounded-lg text-sm w-full focus:ring-0 focus:border-primary placeholder:text-neutral-text-main/50 font-medium shadow-sm transition-colors"
+            className="pl-10 pr-16 py-3 bg-white dark:bg-background-dark border-2 border-primary rounded-lg text-sm w-full focus:ring-0 focus:border-primary placeholder:text-neutral-text-main/50 dark:placeholder:text-border-dark font-medium shadow-sm transition-colors"
             placeholder="Search ingredient to add..."
             type="text"
             value={searchTerm}
@@ -177,8 +177,8 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
 
         {/* Dropdown - Fix: Only shows when there is a search term */}
         {searchResults.length > 0 && (
-          <div className="absolute bottom-full left-0 right-0 mb-2 mx-4 bg-white dark:bg-gray-900 rounded-lg shadow-2xl border border-neutral-border dark:border-border-dark overflow-hidden max-h-72 overflow-y-auto z-50 animate-in slide-in-from-bottom-2 fade-in duration-200">
-            <div className="px-3 py-2 text-xs font-bold text-neutral-text-secondary uppercase tracking-wider bg-neutral-surface/50 dark:bg-gray-800/50 border-b border-neutral-border dark:border-gray-700 sticky top-0">
+          <div className="absolute bottom-full left-0 right-0 mb-2 mx-4 bg-white dark:bg-background-dark rounded-lg shadow-2xl border border-neutral-border dark:border-border-dark overflow-hidden max-h-72 overflow-y-auto z-50 animate-in slide-in-from-bottom-2 fade-in duration-200">
+            <div className="px-3 py-2 text-xs font-bold text-neutral-text-secondary dark:text-neutral-text-secondary-dark uppercase tracking-wider bg-neutral-surface/50 dark:bg-background-dark/80 border-b border-neutral-border dark:border-border-dark sticky top-0">
               Inventory Matches
             </div>
 
@@ -186,7 +186,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
               <div
                 key={item.id}
                 onClick={() => handleSelectIngredient(item)}
-                className="flex items-center justify-between p-3 cursor-pointer hover:bg-neutral-surface dark:hover:bg-gray-800 hover:border-l-4 hover:border-primary group"
+                className="flex items-center justify-between p-3 cursor-pointer hover:bg-neutral-surface dark:hover:bg-primary/10 hover:border-l-4 hover:border-primary group"
               >
                 <div className="flex items-center gap-3">
                   <div

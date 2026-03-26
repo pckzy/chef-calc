@@ -136,7 +136,7 @@ const InventoryPagination = ({ currentPage, totalItems, itemsPerPage, onPageChan
                 ? "cursor-default border-transparent text-neutral-text-secondary/50"
                 : currentPage === page
                   ? "text-neutral-text-main bg-white dark:bg-primary border-neutral-border dark:border-gray-600"
-                  : "text-neutral-text-secondary hover:text-neutral-text-main border-transparent hover:bg-neutral-surface dark:hover:bg-gray-800"
+                  : "text-neutral-text-secondary hover:text-neutral-text-main border-transparent hover:bg-neutral-surface dark:hover:bg-primary/10 dark:hover:text-white"
             }`}
           >
             {page}

@@ -8,7 +8,7 @@ const MobileNavLink = ({ label, href, icon }) => {
         flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all
         ${isActive 
           ? "bg-primary/10 text-primary font-bold" 
-          : "text-neutral-text-secondary hover:bg-neutral-surface dark:hover:bg-gray-800"
+          : "text-neutral-text-secondary hover:bg-neutral-surface dark:hover:bg-primary/10"
         }
       `}
     >
