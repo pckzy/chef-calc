@@ -92,14 +92,14 @@ const InventoryPage = () => {
         >
           <Button label='Add Ingredient' icon='add' onClick={handleAddNewClick} color='bg-primary'/>
         </Header>
-        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-neutral-border dark:border-gray-800 flex flex-col h-full">
+        <div className="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-neutral-border dark:border-border-dark flex flex-col h-full">
           <InventoryFilters
             categories={categories}
             itemCount={filteredIngredients.length}
             onCategoryChange={onCategoryChange}
             onSearch={onSearch}
           />
-          <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-neutral-surface/50 dark:bg-gray-800/50 text-xs font-semibold text-neutral-text-secondary uppercase tracking-wider border-b border-neutral-border dark:border-gray-800">
+          <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-neutral-surface/50 dark:bg-black/20 text-xs font-semibold text-neutral-text-secondary dark:text-neutral-text-secondary-dark uppercase tracking-wider border-b border-neutral-border dark:border-border-dark">
             <div className="col-span-3">Ingredient Name</div>
             <div className="col-span-2">Category</div>
             <div className="col-span-2 text-right">Price</div>
@@ -107,7 +107,7 @@ const InventoryPage = () => {
             <div className="col-span-2 text-right">Last Updated</div>
             <div className="col-span-1 text-right"></div>
           </div>
-          <div className="divide-y divide-neutral-border dark:divide-gray-800">
+          <div className="divide-y divide-neutral-border dark:divide-border-dark">
             {loading ? (
               <LoadingSpinner title="ingredients" />
             ) : (
@@ -124,7 +124,7 @@ const InventoryPage = () => {
             {!loading && filteredIngredients.length === 0 && (
               <div className="flex flex-col items-center justify-center py-20 px-4 bg-white dark:bg-background-dark rounded-2xl border-2 border-dashed border-neutral-border dark:border-gray-800 transition-all">
                 <div className="w-20 h-20 bg-neutral-surface dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-4xl text-neutral-text-secondary opacity-50">
+                  <span className="material-symbols-outlined text-4xl text-neutral-text-secondary dark:text-neutral-text-secondary-dark opacity-50">
                     inventory_2
                   </span>
                 </div>
@@ -133,7 +133,7 @@ const InventoryPage = () => {
                   No ingredients found
                 </h3>
                 {(searchName || selectedCategory) && (
-                  <p className="mt-2 text-sm text-neutral-text-secondary text-center max-w-[280px]">
+                  <p className="mt-2 text-sm text-neutral-text-secondary dark:text-neutral-text-secondary-dark text-center max-w-[280px]">
                     We couldn't find anything matching "
                     <span className="font-bold text-primary">{searchName}</span>
                     "

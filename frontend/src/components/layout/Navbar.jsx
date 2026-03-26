@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavLink from "./NavLink";
 import MobileNavLink from "./MobileNavLink";
 import supabase from "../../lib/supabase";
@@ -9,6 +9,32 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
 
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+
+    setDarkMode(isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  };
+
+  useEffect(() => {
+    // โหลดค่าจาก localStorage
+    const saved = localStorage.getItem("theme");
+
+    if (saved === "dark") {
+      document.documentElement.classList.add("dark");
+      setDarkMode(true);
+    } else if (saved === "light") {
+      document.documentElement.classList.remove("dark");
+      setDarkMode(false);
+    } else {
+      // default = ตาม OS
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.classList.toggle("dark", prefersDark);
+      setDarkMode(prefersDark);
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -65,7 +91,16 @@ const Navbar = () => {
                 className="fixed inset-0 z-10"
                 onClick={() => setIsProfileOpen(false)}
               ></div>
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-900 border border-neutral-border dark:border-gray-800 rounded-xl shadow-xl z-20 overflow-hidden py-1 animate-in fade-in zoom-in duration-200">
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-background-dark border border-neutral-border dark:border-border-dark rounded-xl shadow-xl z-20 overflow-hidden py-1 animate-in fade-in zoom-in duration-200">
+                <button
+                  onClick={toggleDarkMode}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-text-secondary dark:text-gray-400 hover:bg-neutral-surface dark:hover:bg-gray-800 transition-colors"
+                >
+                  <span className="material-symbols-outlined text-lg">
+                    {darkMode ? 'dark_mode' : 'light_mode'}
+                  </span>
+                  {darkMode ? "Dark Mode" : "Light Mode"}
+                </button>
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"

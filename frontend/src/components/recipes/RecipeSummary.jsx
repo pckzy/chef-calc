@@ -59,7 +59,7 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
 
   return (
     <>
-      <div className="bg-neutral-text-main dark:bg-gray-900 text-white rounded-xl shadow-lg border border-neutral-text-main dark:border-gray-800 overflow-hidden shrink-0">
+      <div className="bg-neutral-text-main dark:bg-primary/5 text-white rounded-xl shadow-lg border border-neutral-text-main dark:border-primary/20 overflow-hidden shrink-0">
         <div className="p-6 pb-0">
           <h3 className="font-bold text-lg mb-6 flex items-center gap-2 text-white">
             <span className="material-symbols-outlined text-primary">
@@ -96,7 +96,7 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
               </div>
               <div className="relative">
                 <input
-                  className="w-full bg-gray-800 border-gray-700 rounded-lg text-white font-bold pr-8 focus:border-primary focus:ring-primary"
+                  className="w-full bg-gray-800 dark:bg-background-dark border-gray-700 dark:border-border-dark rounded-lg text-white font-bold pr-8 focus:border-primary focus:ring-primary"
                   type="number"
                   value={targetMargin}
                   name="targetMargin"
@@ -113,7 +113,7 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
               </label>
               <div className="relative">
                 <input
-                  className="w-full bg-gray-800 border-gray-700 rounded-lg text-white font-bold pr-8 focus:border-primary focus:ring-primary"
+                  className="w-full bg-gray-800 dark:bg-background-dark border-gray-700 dark:border-border-dark rounded-lg text-white font-bold pr-8 focus:border-primary focus:ring-primary"
                   type="number"
                   value={taxRate}
                   name="taxRate"
@@ -126,7 +126,7 @@ const RecipeSummary = ({ summaryData, setSummaryData, ingredients }) => {
             </div>
           </div>
         </div>
-        <div className="mt-8 bg-[#1a2e23] p-6 border-t border-gray-700">
+        <div className="mt-8 bg-[#1a2e23] p-6 border-t border-gray-700 dark:border-primary/20">
           <div className="flex justify-between items-center mb-1">
             <span className="text-gray-300 text-sm">Suggested Price</span>
             <span className="text-primary font-mono text-xl font-bold">

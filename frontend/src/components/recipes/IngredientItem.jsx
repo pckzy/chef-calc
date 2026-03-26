@@ -38,7 +38,7 @@ const IngredientItem = ({ item, onUpdate, onDelete }) => {
   };
 
   return (
-    <div className="group flex flex-col sm:grid sm:grid-cols-12 gap-3 sm:gap-2 sm:items-center p-3 rounded-lg hover:bg-neutral-surface dark:hover:bg-gray-800 transition-colors border border-transparent hover:border-neutral-border dark:hover:border-gray-700 mb-1">
+    <div className="group flex flex-col sm:grid sm:grid-cols-12 gap-3 sm:gap-2 sm:items-center p-3 rounded-lg hover:bg-neutral-surface dark:hover:bg-background-dark transition-colors border border-transparent hover:border-neutral-border dark:hover:border-border-dark mb-1">
       <div className="col-span-5 w-full flex items-start sm:items-center justify-between">
         <div className="flex items-center gap-3">
           <div
@@ -65,7 +65,7 @@ const IngredientItem = ({ item, onUpdate, onDelete }) => {
       <div className="w-full flex items-center justify-between gap-2 sm:contents">
         <div className="col-span-2 w-20 sm:w-full sm:text-right">
           <input
-            className="w-full text-center sm:text-right bg-white dark:bg-gray-900 border border-neutral-border dark:border-gray-600 rounded px-2 py-1.5 sm:py-1 text-sm focus:border-primary focus:ring-0"
+            className="w-full text-center sm:text-right bg-white dark:bg-background-dark border border-neutral-border dark:border-border-dark rounded px-2 py-1.5 sm:py-1 text-sm focus:border-primary focus:ring-0"
             type="number"
             step="any"
             min="1"

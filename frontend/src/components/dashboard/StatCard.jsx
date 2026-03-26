@@ -2,8 +2,8 @@ import React from "react";
 
 const StatCard = ({ title, value, icon, subtitleText, subtitleIcon }) => {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl p-5 shadow-sm border border-neutral-border dark:border-gray-800 flex items-center gap-4">
-      <div className="size-12 rounded-full bg-neutral-surface dark:bg-gray-800 flex items-center justify-center text-primary">
+    <div className="bg-white dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-neutral-border dark:border-border-dark flex items-center gap-4">
+      <div className="size-12 rounded-full bg-neutral-surface dark:bg-background-dark flex items-center justify-center text-primary">
         <span className="material-symbols-outlined text-[28px]">
           {icon}
         </span>

@@ -39,8 +39,8 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-neutral-border dark:border-gray-800 overflow-hidden">
-      <div className="p-5 border-b border-neutral-border dark:border-gray-800 flex justify-between items-center">
+    <div className="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-neutral-border dark:border-border-dark overflow-hidden">
+      <div className="p-5 border-b border-neutral-border dark:border-border-dark flex justify-between items-center">
         <h3 className="font-bold text-lg flex items-center gap-2 text-neutral-text-main dark:text-white">
           <span className="material-symbols-outlined text-primary">
             history
@@ -50,7 +50,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
       </div>
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-left text-sm whitespace-nowrap">
-          <thead className="bg-neutral-surface dark:bg-gray-800 text-neutral-text-secondary uppercase text-xs font-semibold tracking-wider">
+          <thead className="bg-neutral-surface dark:bg-black/20 text-neutral-text-secondary dark:text-neutral-text-secondary-dark uppercase text-xs font-semibold tracking-wider">
             <tr>
               <th className="px-6 py-4">Recipe Name</th>
               <th className="px-6 py-4">Category</th>
@@ -61,7 +61,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
               <th className="px-6 py-4 text-right"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral-border dark:divide-gray-800">
+          <tbody className="divide-y divide-neutral-border dark:divide-border-dark">
             {data.length === 0 ? (
               <tr>
                 <td
@@ -76,7 +76,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
                 <tr
                   key={index}
                   onClick={() => openDetailsModal(recipe)}
-                  className="group hover:bg-neutral-surface/50 dark:hover:bg-gray-800/50 transition-colors"
+                  className="group hover:bg-neutral-surface/50 dark:hover:bg-accent-surface transition-colors"
                 >
                   <td className="px-6 py-4 font-medium text-neutral-text-main dark:text-white flex items-center gap-3">
                     <div
@@ -194,12 +194,12 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
       {/* 🔴 3. Modal รายละเอียด (Recipe Details) */}
       {isDetailsOpen && recipeDetails && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-xl shadow-2xl border border-neutral-border dark:border-gray-800 flex flex-col overflow-hidden animate-scale-up">
-            <div className="px-6 py-4 border-b border-neutral-border dark:border-gray-800 flex items-center justify-between">
+          <div className="bg-white dark:bg-background-dark/50 w-full max-w-2xl rounded-xl shadow-2xl border border-neutral-border dark:border-border-dark flex flex-col overflow-hidden animate-scale-up">
+            <div className="px-6 py-4 border-b border-neutral-border dark:border-border-dark flex items-center justify-between">
               <h3 className="text-xl font-bold text-neutral-text-main dark:text-white">
                 Recipe Details: {recipeDetails.name}
               </h3>
-              <button onClick={() => setIsDetailsOpen(false)} className="size-8 flex items-center justify-center rounded-full hover:bg-neutral-surface dark:hover:bg-gray-800 text-neutral-text-secondary transition-colors">
+              <button onClick={() => setIsDetailsOpen(false)} className="size-8 flex items-center justify-center rounded-full hover:bg-neutral-surface dark:hover:bg-background-dark text-neutral-text-secondary transition-colors">
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
@@ -207,14 +207,14 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
             <div className="p-6 overflow-y-auto max-h-[60vh]">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="text-neutral-text-secondary dark:text-gray-400 text-xs uppercase tracking-wider font-semibold border-b border-neutral-border dark:border-gray-800">
+                  <tr className="text-neutral-text-secondary dark:text-neutral-text-secondary text-xs uppercase tracking-wider font-semibold border-b border-neutral-border dark:border-border-dark">
                     <th className="pb-3 px-2">Ingredient Name</th>
                     <th className="pb-3 px-2 text-right">Quantity</th>
                     <th className="pb-3 px-2 text-right">Unit Cost</th>
                     <th className="pb-3 px-2 text-right">Total</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-border dark:divide-gray-800">
+                <tbody className="divide-y divide-neutral-border dark:divide-border-dark">
                   {/* 🟢 สมมติว่าใน recipeDetails มีข้อมูล ingredients มาให้แล้ว */}
                   {recipeDetails.ingredients?.map((ing, idx) => (
                     <tr key={idx}>
@@ -234,7 +234,7 @@ const PerformanceTable = ({ data = [], onRefresh }) => {
               </table>
             </div>
 
-            <div className="px-6 py-6 bg-background-light dark:bg-gray-800/30 border-t border-neutral-border dark:border-gray-800">
+            <div className="px-6 py-6 bg-background-light dark:bg-gray-800/30 border-t border-neutral-border dark:border-border-dark">
               <div className="grid grid-cols-3 gap-4">
                 <div className="flex flex-col">
                   <span className="text-xs text-neutral-text-secondary uppercase font-semibold">Total Cost</span>

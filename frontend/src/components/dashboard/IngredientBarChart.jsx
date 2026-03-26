@@ -40,7 +40,7 @@ const CustomBarTooltip = ({ active, payload, label }) => {
 const IngredientBarChart = ({ data }) => {
   const hasData = data && data.length > 0;
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-neutral-border dark:border-gray-800">
+    <div className="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-neutral-border dark:border-border-dark">
       <h3 className="font-bold text-lg mb-6 flex items-center gap-2 text-neutral-text-main dark:text-white">
         <span className="material-symbols-outlined text-primary">
           show_chart

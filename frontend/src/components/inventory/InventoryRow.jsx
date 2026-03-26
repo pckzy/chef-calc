@@ -79,11 +79,11 @@ const InventoryRow = ({ ingredient, onClick, onRefresh }) => {
 
   return (
     <div
-      className="group flex flex-col md:grid md:grid-cols-12 gap-4 items-center p-4 hover:bg-neutral-surface dark:hover:bg-gray-800 transition-colors cursor-pointer"
+      className="group flex flex-col md:grid md:grid-cols-12 gap-4 items-center p-4 hover:bg-neutral-surface dark:hover:bg-accent-surface transition-colors cursor-pointer"
     >
       <div className="col-span-3 w-full flex items-center gap-4">
         <div
-          className="size-10 rounded bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-gray-600"
+          className="size-10 rounded bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-border-dark"
           style={{
             backgroundImage: `url("${ingredient.image_url || "https://via.placeholder.com/40"}")`,
           }}
@@ -135,7 +135,7 @@ const InventoryRow = ({ ingredient, onClick, onRefresh }) => {
         <span className="text-xs font-semibold text-neutral-text-secondary md:hidden">
           Unit
         </span>
-        <div className="text-sm text-neutral-text-secondary">
+        <div className="text-sm text-neutral-text-secondary dark:text-neutral-text-secondary-dark">
           per {ingredient.unit}
         </div>
       </div>
@@ -143,7 +143,7 @@ const InventoryRow = ({ ingredient, onClick, onRefresh }) => {
         <span className="text-xs font-semibold text-neutral-text-secondary md:hidden">
           Last Updated
         </span>
-        <div className="text-sm text-neutral-text-secondary">
+        <div className="text-sm text-neutral-text-secondary dark:text-neutral-text-secondary-dark">
           {formattedDate}
         </div>
       </div>

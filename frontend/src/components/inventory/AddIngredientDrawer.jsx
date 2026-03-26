@@ -115,12 +115,12 @@ const AddIngredientDrawer = ({
 
       {/* Slide-over Panel - Slide in/out from right */}
       <div
-        className={`relative w-full max-w-lg bg-white dark:bg-background-dark h-full shadow-2xl flex flex-col transform transition-transform duration-500 ease-in-out border-l border-neutral-border dark:border-gray-800 ${
+        className={`relative w-full max-w-lg bg-white dark:bg-background-dark h-full shadow-2xl flex flex-col transform transition-transform duration-500 ease-in-out border-l border-neutral-border dark:border-border-dark ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-border dark:border-gray-800 bg-background-light dark:bg-gray-900/50">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-border dark:border-border-dark bg-background-light dark:bg-background-dark/50">
           <div>
             <h2 className="text-xl font-black text-neutral-text-main dark:text-white tracking-tight">
               {editData ? "Update Ingredient" : "Add New Ingredient"}
@@ -138,7 +138,7 @@ const AddIngredientDrawer = ({
         </div>
 
         {/* Form Body - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 dark:bg-background-dark">
           {/* Image Upload Area */}
           <div className="space-y-2">
             <label className="block text-sm font-bold text-neutral-text-main dark:text-white">
@@ -154,7 +154,7 @@ const AddIngredientDrawer = ({
 
             <div
               onClick={() => fileInputRef.current.click()}
-              className="relative flex justify-center items-center rounded-xl border-2 border-dashed border-neutral-border dark:border-gray-700 hover:border-primary hover:bg-neutral-surface/30 dark:hover:bg-gray-800/30 transition-all cursor-pointer group overflow-hidden h-52 w-full" // เพิ่ม h-52 และ overflow-hidden
+              className="relative flex justify-center items-center rounded-xl border-2 border-dashed border-neutral-border dark:border-border-dark hover:border-primary hover:bg-neutral-surface/30 dark:hover:bg-gray-800/30 transition-all cursor-pointer group overflow-hidden h-52 w-full" // เพิ่ม h-52 และ overflow-hidden
             >
               {imagePreview ? (
                 <div className="relative w-full h-full">
@@ -200,7 +200,7 @@ const AddIngredientDrawer = ({
               </label>
               <input
                 id="name"
-                className="block w-full rounded-lg border-neutral-border dark:border-gray-700 bg-white dark:bg-gray-800 py-2.5 px-3.5 text-neutral-text-main dark:text-white focus:border-primary focus:ring-primary sm:text-sm"
+                className="block w-full rounded-lg border-neutral-border dark:border-border-dark bg-white dark:dark:bg-background-dark py-2.5 px-3.5 text-neutral-text-main dark:text-white focus:border-primary focus:ring-primary sm:text-sm"
                 placeholder="e.g. Extra Virgin Olive Oil"
                 value={formData.name}
                 onChange={(e) =>
@@ -217,7 +217,7 @@ const AddIngredientDrawer = ({
               </label>
               <div className="relative">
                 <select
-                  className="block w-full appearance-none rounded-lg border-neutral-border dark:border-gray-700 bg-white dark:bg-gray-800 py-2.5 pl-3.5 pr-10 text-neutral-text-main dark:text-white focus:border-primary focus:ring-primary sm:text-sm"
+                  className="block w-full appearance-none rounded-lg border-neutral-border dark:border-border-dark bg-white dark:dark:bg-background-dark py-2.5 pl-3.5 pr-10 text-neutral-text-main dark:text-white focus:border-primary focus:ring-primary sm:text-sm"
                   id="category"
                   value={formData.category_id}
                   onChange={(e) =>
@@ -239,7 +239,7 @@ const AddIngredientDrawer = ({
               </div>
             </div>
           </div>
-          <div className="pt-2 border-t border-neutral-border dark:border-gray-800">
+          <div className="pt-2 border-t border-neutral-border dark:border-border-dark">
             <h3 className="text-sm font-bold text-neutral-text-secondary uppercase tracking-wider mb-4">
               Purchase Details
             </h3>
@@ -258,7 +258,7 @@ const AddIngredientDrawer = ({
                     </span>
                   </div>
                   <input
-                    className="block w-full rounded-lg border-neutral-border dark:border-gray-700 bg-white dark:bg-gray-800 py-2.5 pl-7 pr-3.5 text-neutral-text-main dark:text-white placeholder-neutral-text-secondary/50 focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full rounded-lg border-neutral-border dark:border-border-dark bg-white dark:bg-background-dark py-2.5 pl-7 pr-3.5 text-neutral-text-main dark:text-white placeholder-neutral-text-secondary/50 focus:border-primary focus:ring-primary sm:text-sm"
                     id="price"
                     name="price"
                     placeholder="0.00"
@@ -283,7 +283,7 @@ const AddIngredientDrawer = ({
                 </label>
                 <div className="relative">
                   <select
-                    className="block w-full appearance-none rounded-lg border-neutral-border dark:border-gray-700 bg-white dark:bg-gray-800 py-2.5 pl-3.5 pr-10 text-neutral-text-main dark:text-white focus:border-primary focus:ring-primary sm:text-sm"
+                    className="block w-full appearance-none rounded-lg border-neutral-border dark:border-border-dark bg-white dark:bg-background-dark py-2.5 pl-3.5 pr-10 text-neutral-text-main dark:text-white focus:border-primary focus:ring-primary sm:text-sm"
                     id="unit"
                     value={formData.unit}
                     onChange={(e) =>
@@ -308,7 +308,7 @@ const AddIngredientDrawer = ({
               </div>
             </div>
           </div>
-          <div className="bg-neutral-surface dark:bg-gray-800/50 rounded-lg p-4 border border-neutral-border dark:border-gray-800">
+          <div className="bg-neutral-surface dark:bg-background-dark/50 rounded-lg p-4 border border-neutral-border dark:border-border-dark">
             <div className="flex justify-between items-center text-sm">
               <span className="text-neutral-text-secondary">
                 Cost per Unit (Est.)
@@ -321,7 +321,7 @@ const AddIngredientDrawer = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="border-t border-neutral-border dark:border-gray-800 p-6 bg-background-light dark:bg-gray-900/50">
+        <div className="border-t border-neutral-border dark:border-gray-800 p-6 bg-background-light dark:bg-background-dark/50">
           <div className="flex gap-3">
             <button
               onClick={onClose}

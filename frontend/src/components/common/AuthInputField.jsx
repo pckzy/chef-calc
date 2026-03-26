@@ -25,7 +25,7 @@ const AuthInputField = ({ label, icon, rightLabel, type, error, ...props }) => {
         <input
           {...props}
           type={isPasswordTag ? (showPassword ? "text" : "password") : type}
-          className={`flex w-full rounded-xl h-12 pl-11 pr-10 transition-all duration-200 border text-base
+          className={`flex w-full rounded-xl h-12 pl-11 pr-10 transition-all duration-200 border text-base text-black dark:text-white
             ${
               error
                 ? "border-red-500 focus:ring-red-500/50 focus:border-red-500 bg-white dark:bg-slate-800"

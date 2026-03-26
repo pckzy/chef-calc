@@ -109,8 +109,8 @@ const InventoryPagination = ({ currentPage, totalItems, itemsPerPage, onPageChan
   if (totalItems === 0) return null;
 
   return (
-    <div className="p-4 border-t border-neutral-border dark:border-gray-800 flex justify-between items-center bg-neutral-surface/20 dark:bg-gray-800/20 rounded-b-xl">
-      <span className="text-sm text-neutral-text-secondary">
+    <div className="p-4 border-t border-neutral-border dark:border-border-dark flex justify-between items-center bg-neutral-surface/20 dark:bg-gray-800/20 rounded-b-xl">
+      <span className="text-sm text-neutral-text-secondary dark:text-neutral-text-secondary-dark">
         Showing{' '}
         <span className="font-bold text-neutral-text-main dark:text-white">
           {startIndex}-{endIndex}{' '}
@@ -121,7 +121,7 @@ const InventoryPagination = ({ currentPage, totalItems, itemsPerPage, onPageChan
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-3 py-1 text-sm font-medium text-neutral-text-secondary hover:text-neutral-text-main disabled:opacity-50 transition-colors"
+          className="px-3 py-1 text-sm font-medium text-neutral-text-secondary dark:text-neutral-text-secondary-dark hover:text-neutral-text-main disabled:opacity-50 transition-colors"
         >
           Previous
         </button>
@@ -135,7 +135,7 @@ const InventoryPagination = ({ currentPage, totalItems, itemsPerPage, onPageChan
               page === "..." 
                 ? "cursor-default border-transparent text-neutral-text-secondary/50"
                 : currentPage === page
-                  ? "text-neutral-text-main bg-white dark:bg-gray-700 border-neutral-border dark:border-gray-600"
+                  ? "text-neutral-text-main bg-white dark:bg-primary border-neutral-border dark:border-gray-600"
                   : "text-neutral-text-secondary hover:text-neutral-text-main border-transparent hover:bg-neutral-surface dark:hover:bg-gray-800"
             }`}
           >
@@ -146,7 +146,7 @@ const InventoryPagination = ({ currentPage, totalItems, itemsPerPage, onPageChan
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 text-sm font-medium text-neutral-text-secondary hover:text-neutral-text-main disabled:opacity-50 transition-colors"
+          className="px-3 py-1 text-sm font-medium text-neutral-text-secondary dark:text-neutral-text-secondary-dark hover:text-neutral-text-main disabled:opacity-50 transition-colors"
         >
           Next
         </button>

@@ -32,7 +32,7 @@ const RecipeDetail = ({
   return (
     <div className="flex flex-col gap-6 h-full">
       {" "}
-      <div className="bg-white dark:bg-gray-900 rounded-xl p-5 shadow-sm border border-neutral-border dark:border-gray-800 shrink-0">
+      <div className="bg-white dark:bg-primary/5 rounded-xl p-5 shadow-sm border border-neutral-border dark:border-primary/20 shrink-0">
         <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
           <span className="material-symbols-outlined text-primary">
             restaurant_menu
@@ -50,7 +50,7 @@ const RecipeDetail = ({
 
           <div
             onClick={handleImageClick}
-            className={`w-full aspect-square bg-neutral-surface dark:bg-gray-800 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-neutral-border dark:border-gray-700 hover:border-primary cursor-pointer group transition-colors relative overflow-hidden ${uploading ? "opacity-50 pointer-events-none" : ""}`}
+            className={`w-full aspect-square bg-neutral-surface dark:bg-background-dark rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-neutral-border dark:border-border-dark hover:border-primary cursor-pointer group transition-colors relative overflow-hidden ${uploading ? "opacity-50 pointer-events-none" : ""}`}
           >
             {recipeData.image_url ? (
               <>
@@ -97,7 +97,7 @@ const RecipeDetail = ({
               Recipe Name
             </span>
             <input
-              className="w-full rounded-lg bg-neutral-surface dark:bg-gray-800 border-transparent p-3 text-sm"
+              className="w-full rounded-lg bg-neutral-surface dark:bg-background-dark border-transparent p-3 text-sm focus:border-primary focus:ring-0"
               placeholder="e.g. Truffle Mushroom Risotto"
               type="text"
               value={recipeData.name}
@@ -111,7 +111,7 @@ const RecipeDetail = ({
               Category
             </span>
             <select
-              className="w-full rounded-lg bg-neutral-surface dark:bg-gray-800 border-transparent p-3 text-sm focus:border-primary focus:ring-0 text-neutral-text-main dark:text-white transition-all cursor-pointer"
+              className="w-full rounded-lg bg-neutral-surface dark:bg-background-dark border-transparent p-3 text-sm focus:border-primary focus:ring-0 text-neutral-text-main dark:text-white transition-all cursor-pointer"
               value={recipeData.categoryId}
               onChange={(e) =>
                 setRecipeData({ ...recipeData, categoryId: e.target.value })

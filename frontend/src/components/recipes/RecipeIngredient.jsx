@@ -113,9 +113,9 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-neutral-border dark:border-gray-800 flex-1 flex flex-col ring-4 ring-primary/10 transition-all min-h-0">
+    <div className="bg-white dark:bg-primary/5 rounded-xl shadow-2xl border border-neutral-border dark:border-border-dark flex-1 flex flex-col ring-4 ring-primary/10 transition-all min-h-0">
       {/* Header */}
-      <div className="p-5 border-b border-neutral-border dark:border-gray-800 flex justify-between items-center shrink-0">
+      <div className="p-5 border-b border-neutral-border dark:border-border-dark flex justify-between items-center shrink-0">
         <h3 className="font-bold text-lg flex items-center gap-2">
           <span className="material-symbols-outlined text-primary">
             kitchen
@@ -126,7 +126,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
 
       {/* Scrollable List Area (Fix: Uses flex-1 and overflow-y-auto instead of max-h) */}
       <div className="p-2 overflow-y-auto flex-1 min-h-0 scrollbar-hide">
-        <div className="grid grid-cols-12 gap-2 px-4 py-2 text-xs font-semibold text-neutral-text-secondary uppercase tracking-wider sticky top-0 bg-white dark:bg-gray-900 z-10">
+        <div className="grid grid-cols-12 gap-2 px-4 py-2 text-xs font-semibold text-neutral-text-secondary uppercase tracking-wider sticky top-0 bg-white dark:bg-black/20 z-10">
           <div className="col-span-5">Item</div>
           <div className="col-span-2 text-right">Qty</div>
           <div className="col-span-2">Unit</div>
@@ -151,7 +151,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
       </div>
 
       {/* Search Area */}
-      <div className="relative p-4 border-t border-neutral-border dark:border-gray-800 bg-white dark:bg-gray-900 rounded-b-xl shrink-0 z-50">
+      <div className="relative p-4 border-t border-neutral-border dark:border-border-dark bg-white dark:bg-primary/5 rounded-b-xl shrink-0 z-50">
         <div className="relative z-50">
           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary">
             <span className="material-symbols-outlined">search</span>
@@ -177,7 +177,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
 
         {/* Dropdown - Fix: Only shows when there is a search term */}
         {searchResults.length > 0 && (
-          <div className="absolute bottom-full left-0 right-0 mb-2 mx-4 bg-white dark:bg-gray-900 rounded-lg shadow-2xl border border-neutral-border dark:border-gray-700 overflow-hidden max-h-72 overflow-y-auto z-50 animate-in slide-in-from-bottom-2 fade-in duration-200">
+          <div className="absolute bottom-full left-0 right-0 mb-2 mx-4 bg-white dark:bg-gray-900 rounded-lg shadow-2xl border border-neutral-border dark:border-border-dark overflow-hidden max-h-72 overflow-y-auto z-50 animate-in slide-in-from-bottom-2 fade-in duration-200">
             <div className="px-3 py-2 text-xs font-bold text-neutral-text-secondary uppercase tracking-wider bg-neutral-surface/50 dark:bg-gray-800/50 border-b border-neutral-border dark:border-gray-700 sticky top-0">
               Inventory Matches
             </div>
@@ -190,7 +190,7 @@ const RecipeIngredient = ({ ingredients, setIngredients }) => {
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className="size-10 rounded-md bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-gray-600"
+                    className="size-10 rounded-md bg-gray-200 dark:bg-gray-700 bg-cover bg-center shrink-0 border border-neutral-border dark:border-border-dark"
                     style={{
                       backgroundImage: `url("${item.image_url || "https://e7.pngegg.com/pngimages/990/965/png-clipart-prohibition-in-the-united-states-computer-icons-symbol-none-angle-sign-thumbnail.png"}")`,
                     }}
